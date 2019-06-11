@@ -1,3 +1,6 @@
+// Initialize workstation
+// link dependencies
+
 const path = require('path')
 const Command = require('common-bin')
 

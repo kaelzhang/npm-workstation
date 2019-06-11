@@ -1,3 +1,5 @@
+// Publish the workstation
+
 const path = require('path')
 const Command = require('common-bin')
 

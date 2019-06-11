@@ -46,6 +46,8 @@ npmw add /path/to/project-2 foo
 npmw publish
 ```
 
+A vscode extension is also available to help it much easier to add repos into a single workstation.
+
 ## Documentations
 
 - Frequently asked questions
