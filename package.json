@@ -49,6 +49,8 @@
     "nyc": "^14.1.1"
   },
   "dependencies": {
-    "common-bin": "^2.8.1"
+    "common-bin": "^2.8.1",
+    "err-object": "^4.5.0",
+    "fs-extra": "^8.0.1"
   }
 }

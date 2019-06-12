@@ -1,5 +1,8 @@
 // Publish the workstation
 
+// 1. Publish
+// npmw publish -- [npm-publish-options]
+
 const path = require('path')
 const Command = require('common-bin')
 
