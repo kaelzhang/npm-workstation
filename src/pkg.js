@@ -1,12 +1,12 @@
 // Read and parse all packages
 
-const readPkg = require('./read-pkg')
+const readPackageJson = require('./read-pkg')
 
 class Package {
   constructor (name) {
     this.name = name
     this.dependents = Object.create(null)
-    this.pkg = null
+    this.packageJson = null
     this.lastCommitHead = null
     this.path = null
   }
@@ -30,7 +30,7 @@ class PackageCollection {
     await Promise.all(tasks)
 
     for (const [name, pkg] of Object.entries(this._packages)) {
-      if (!pkg.pkg) {
+      if (!pkg.packageJson) {
         // Delete packages that is not included by the current workstation
         delete this._packages[name]
       }
@@ -45,10 +45,10 @@ class PackageCollection {
     path: projectPath,
     commitHead
   }) {
-    const rawPkg = await readPkg(projectPath)
+    const rawPkg = await readPackageJson(projectPath)
     const pkg = this._getPackage(rawPkg.name)
 
-    pkg.pkg = rawPkg
+    pkg.packageJson = rawPkg
     pkg.lastCommitHead = commitHead
     pkg.path = projectPath
 
