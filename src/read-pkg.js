@@ -17,6 +17,7 @@ const read = async dir => {
   }
 }
 
+// resolve package.bin
 const cleanBin = (cwd, {bin}) => {
   if (!bin) {
     return

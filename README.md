@@ -21,7 +21,7 @@ A tool for managing multiple related JavaScript projects(npm packages), the bett
 
 With the help of `npm-workstation`, we need not to put multiple npm packages into a [monorepo](https://en.wikipedia.org/wiki/Monorepo), such as [`babel`](https://github.com/babel/babel).
 
-Additional, `npm-workstation` could coordinate multiple arbitrary already-existed standalone but related npm packages.
+`npm-workstation` could coordinate multiple arbitrary already-existed standalone but related npm packages.
 
 Generally, if you want to do something as lerna does, and you don't want a monorepo, or can't put everything inside a monorepo (because the npm packages already exist), `npm-workstation` will be a good choice.
 
@@ -47,6 +47,8 @@ npmw publish
 ```
 
 A vscode extension is also available to help it much easier to add repos into a single workstation.
+
+## Commands
 
 ## Documentations
 
