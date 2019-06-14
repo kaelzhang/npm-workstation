@@ -12,6 +12,7 @@ const createBinLink = async (target, source) => {
   await chmod(target, 'ug+x')
 }
 
+// - pc `PackageCollection`
 const link = async pc => {
   const {packages} = pc
 
