@@ -51,6 +51,7 @@
   "dependencies": {
     "common-bin": "^2.8.1",
     "err-object": "^4.5.0",
+    "fs-chmod": "^1.0.3",
     "fs-extra": "^8.0.1"
   }
 }
