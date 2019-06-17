@@ -1,30 +1,86 @@
 const path = require('path')
 const fs = require('fs-extra')
-// const home = require('home')
+const globby = require('globby')
+const home = require('home')
 
 const error = require('./error')
+const {exists} = require('./utils')
 
 // const HOME = home()
-const SUB_DIR = '.npm-workstation'
+const NPM_WORKSTATION = '.npm-workstation'
+const EMPTY_WORKSTATION = {
+  projectd: []
+}
 
-const getCurrentName = root => {
-  const currentFile = path.join(root, SUB_DIR, 'CURRENT')
+class Workstation {
+  constructor (root) {
+    this._root = root
+  }
 
-  try {
-    return fs.readFileSync(currentFile)
-  } catch (err) {
-    if (err.code === 'ENOENT') {
+  exists (name) {
+    const workstationFile = this._getWSFile(name)
+
+    if (exists(workstationFile)) {
+      return workstationFile
+    }
+  }
+
+  get (name) {
+    const file = this.exists(name)
+
+    if (!file) {
       return
     }
 
-    throw error('READ_CURRENT_FAILED', err.stack)
+    const workstation = fs.readJsonSync(file)
+    return workstation
+  }
+
+  _getWSFile (name) {
+    return path.join(
+      this._root, NPM_WORKSTATION, name + NPM_WORKSTATION)
+  }
+
+  _getCurrentNameFile () {
+    return path.join(this._root, NPM_WORKSTATION, 'CURRENT')
+  }
+
+  currentName () {
+    const currentFile = this._getCurrentNameFile()
+
+    try {
+      const content = fs.readFileSync(currentFile)
+      return content.toString().trim()
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        return
+      }
+
+      throw error('READ_CURRENT_FAILED', err.stack)
+    }
+  }
+
+  async setCurrentName (name) {
+    const currentFile = this._getCurrentNameFile()
+
+    await fs.outputFile(currentFile, name)
+  }
+
+  async create (name) {
+    return fs.outputJson(this._getWSFile(name),
+      JSON.stringify(EMPTY_WORKSTATION, null, 2))
+  }
+
+  async allNames () {
+    const files = await globby(['*.npm-workstation'], {
+      cwd: path.join(this._root, NPM_WORKSTATION)
+    })
+
+    return files.map(f => path.basename(f, NPM_WORKSTATION))
   }
 }
 
-const isExists = (root, name) => {
-  const workstationFile = path.join(root, SUB_DIR, `${name}.npm-workstation`)
-}
-
-const getWorkStation = name => {
-
+module.exports = {
+  Workstation,
+  workstation: new Workstation(home())
 }
