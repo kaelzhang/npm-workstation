@@ -6,7 +6,7 @@
 const path = require('path')
 const Command = require('common-bin')
 
-const {workstation} = require('../src/read-workstation')
+const {workstation} = require('../../src/read-workstation')
 
 module.exports = class CreateCommand extends Command {
   constructor (raw) {

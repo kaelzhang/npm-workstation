@@ -72,8 +72,13 @@ class Workstation {
   }
 
   async allNames () {
+    const cwd = path.join(this._root, NPM_WORKSTATION)
+    if (!exists(cwd)) {
+      return []
+    }
+
     const files = await globby(['*.npm-workstation'], {
-      cwd: path.join(this._root, NPM_WORKSTATION)
+      cwd
     })
 
     return files.map(f => path.basename(f, NPM_WORKSTATION))
