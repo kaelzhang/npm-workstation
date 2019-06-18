@@ -67,8 +67,15 @@ class Workstation {
   }
 
   async create (name) {
-    return fs.outputFile(this._getWSFile(name),
-      JSON.stringify(EMPTY_WORKSTATION, null, 2))
+    return this.save({
+      ...EMPTY_WORKSTATION,
+      name
+    })
+  }
+
+  async save (ws) {
+    return fs.outputFile(this._getWSFile(ws.name),
+      JSON.stringify(ws, null, 2))
   }
 
   async allNames () {

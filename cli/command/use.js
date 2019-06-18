@@ -10,13 +10,6 @@ module.exports = class StartCommand extends Command {
     return 'set the current workstation'
   }
 
-  // constructor (raw) {
-  //   super(raw)
-
-  //   this.options = {
-  //   }
-  // }
-
   async run ({
     argv
   }) {

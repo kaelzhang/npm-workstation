@@ -8,6 +8,7 @@ const {Command} = require('bin-tool')
 const chalk = require('chalk')
 
 const {workstation} = require('../../src/read-workstation')
+const options = require('../options')
 
 module.exports = class StartCommand extends Command {
   get description () {
@@ -18,17 +19,7 @@ module.exports = class StartCommand extends Command {
     super(raw)
 
     this.options = {
-      workstation: {
-        type: 'string',
-        alias: 'w',
-        description: 'specify the current used workstation',
-        default () {
-          const [w] = this.rawParent._
-          if (w) {
-            return w
-          }
-        }
-      }
+      workstation: options.optionalWorkstation
     }
   }
 
