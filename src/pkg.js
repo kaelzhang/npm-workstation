@@ -7,12 +7,23 @@ class Package {
     this.name = name
     this.dependents = Object.create(null)
     this.packageJson = null
+    this.rawPackageJson = null
     this.lastCommitHead = null
     this.path = null
   }
 
-  addDependent (pkg) {
-    this.dependents[pkg.name] = pkg
+  addDependent (pkg, type) {
+    if (pkg.name in this.dependents) {
+      this.dependents[pkg.name].type.add(type)
+      return
+    }
+
+    const dependent = this.dependents[pkg.name] = {
+      dependent: pkg,
+      type: new Set()
+    }
+
+    dependent.type.add(type)
   }
 }
 
@@ -45,10 +56,16 @@ class PackageCollection {
     path: projectPath,
     commitHead
   }) {
-    const rawPkg = await readPackageJson(projectPath)
-    const pkg = this._getPackage(rawPkg.name)
+    const {
+      packageJson,
+      rawPackageJson
+    } = await readPackageJson(projectPath)
 
-    pkg.packageJson = rawPkg
+    const pkg = this._getPackage(packageJson.name)
+
+    pkg.packageJson = packageJson
+    pkg.rawPackageJson = rawPackageJson
+
     pkg.lastCommitHead = commitHead
     pkg.path = projectPath
 
@@ -56,11 +73,11 @@ class PackageCollection {
       dependencies,
       devDependencies,
       peerDependencies
-    } = rawPkg
+    } = packageJson
 
-    this._addDependents(pkg, dependencies)
-    this._addDependents(pkg, devDependencies)
-    this._addDependents(pkg, peerDependencies)
+    this._addDependents(pkg, dependencies, 'dependencies')
+    this._addDependents(pkg, devDependencies, 'devDependencies')
+    this._addDependents(pkg, peerDependencies, 'peerDependencies')
   }
 
   _getPackage (name) {
@@ -69,19 +86,19 @@ class PackageCollection {
     )
   }
 
-  _addDependents (dependentpkg, dependencies) {
+  _addDependents (dependentpkg, dependencies, type) {
     if (!dependencies) {
       return
     }
 
     for (const dependencyName of Object.keys(dependencies)) {
-      this._addDependent(dependentpkg, dependencyName)
+      this._addDependent(dependentpkg, dependencyName, type)
     }
   }
 
-  _addDependent (dependentpkg, dependencyName) {
+  _addDependent (dependentpkg, dependencyName, type) {
     const dependency = this._getPackage(dependencyName)
-    dependency.addDependent(dependentpkg)
+    dependency.addDependent(dependentpkg, type)
   }
 }
 

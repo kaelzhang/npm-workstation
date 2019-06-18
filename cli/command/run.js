@@ -16,10 +16,4 @@ module.exports = class StartCommand extends Command {
       }
     }
   }
-
-  async run ({
-    argv
-  }) {
-
-  }
 }

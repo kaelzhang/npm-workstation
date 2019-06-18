@@ -2,17 +2,27 @@ const path = require('path')
 
 const {workstation} = require('../src/read-workstation')
 
-exports.workstation = {
+exports.workstation = ({
+  // Use the project workstation
+  useProjectWorkstation,
+  // Use the current workstation name
+  useCurrent
+} = {}) => ({
   type: 'string',
   alias: 'w',
   description: 'specify the current used workstation',
-  default () {
-    const [ws] = this.rawParent._
-    if (ws) {
-      return ws
+  async default () {
+    let [ws] = this.rawParent._
+
+    if (!ws && useCurrent) {
+      ws = workstation.currentName()
     }
 
-    throw new Error('workstation must be specified')
+    if (!ws) {
+      throw new Error('workstation must be specified')
+    }
+
+    return ws
   },
 
   set (name) {
@@ -23,7 +33,7 @@ exports.workstation = {
 
     return ws
   }
-}
+})
 
 exports.optionalWorkstation = {
   type: 'string',

@@ -48,15 +48,21 @@ class Workstation {
   currentName () {
     const currentFile = this._getCurrentNameFile()
 
+    let current
+
     try {
       const content = fs.readFileSync(currentFile)
-      return content.toString().trim()
+      current = content.toString().trim()
     } catch (err) {
       if (err.code === 'ENOENT') {
         return
       }
 
       throw error('READ_CURRENT_FAILED', err.stack)
+    }
+
+    if (this.exists(current)) {
+      return current
     }
   }
 

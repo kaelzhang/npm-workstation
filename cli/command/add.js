@@ -15,7 +15,9 @@ module.exports = class StartCommand extends Command {
 
     this.options = {
       cwd: options.cwd,
-      workstation: options.workstation
+      workstation: options.workstation({
+        useCurrent: true
+      })
     }
   }
 

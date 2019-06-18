@@ -18,11 +18,7 @@ const read = async dir => {
 }
 
 // resolve package.bin
-const cleanBin = (cwd, {bin}) => {
-  if (!bin) {
-    return
-  }
-
+const cleanBin = (cwd, bin) => {
   for (const [name, p] of Object.entries(bin)) {
     const binPath = path.join(cwd, p)
 
@@ -35,9 +31,19 @@ const cleanBin = (cwd, {bin}) => {
 }
 
 module.exports = async dir => {
-  const pkg = await read(dir)
+  const raw = await read(dir)
+  const packageJson = {
+    ...raw
+  }
 
-  cleanBin(dir, pkg)
+  if (packageJson.bin) {
+    packageJson.bin = cleanBin(dir, {
+      ...packageJson.bin
+    })
+  }
 
-  return pkg
+  return {
+    rawPackageJson: raw,
+    packageJson
+  }
 }

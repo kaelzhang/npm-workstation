@@ -6,5 +6,6 @@ module.exports = class MainCommand extends Command {
     super(raw)
 
     this.load(path.join(__dirname, 'command'))
+    this.alias('ls', 'list')
   }
 }

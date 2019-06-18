@@ -18,7 +18,9 @@ module.exports = class StartCommand extends Command {
     super(raw)
 
     this.options = {
-      workstation: options.workstation
+      workstation: options.workstation({
+        useProjectWorkstation: true
+      })
     }
   }
 

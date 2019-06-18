@@ -22,7 +22,7 @@ const link = async pc => {
   for (const pkg of Object.values(packages)) {
     const source = pkg.path
 
-    for (const dependent of Object.values(pkg.dependents)) {
+    for (const {dependent} of Object.values(pkg.dependents)) {
       const target = path.join(dependent.path, 'node_modules', pkg.name)
       tasks.push(createLink(target, source))
 
