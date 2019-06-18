@@ -4,7 +4,7 @@
 // npmw publish -- [npm-publish-options]
 
 const path = require('path')
-const Command = require('common-bin')
+const {Command} = require('bin-tool')
 
 module.exports = class StartCommand extends Command {
   constructor (raw) {

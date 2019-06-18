@@ -50,7 +50,8 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "common-bin": "^2.8.1",
+    "chokidar": "^3.0.1",
+    "bin-tool": "^0.0.2",
     "err-object": "^5.1.2",
     "fs-chmod": "^1.0.6",
     "fs-extra": "^8.0.1",

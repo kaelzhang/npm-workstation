@@ -4,7 +4,7 @@
 // npmw publish -- [npm-publish-options]
 
 const path = require('path')
-const Command = require('common-bin')
+const {Command} = require('bin-tool')
 
 const {workstation} = require('../../src/read-workstation')
 
@@ -18,6 +18,10 @@ module.exports = class CreateCommand extends Command {
         description: 'create and use the workstation created just now'
       }
     }
+  }
+
+  get description () {
+    return 'create a workstation'
   }
 
   async run ({

@@ -2,18 +2,18 @@
 // link dependencies
 
 const path = require('path')
-const Command = require('common-bin')
+const {Command} = require('bin-tool')
 
 module.exports = class StartCommand extends Command {
   constructor (raw) {
     super(raw)
 
     this.options = {
-      cwd: {
+      workstation: {
         type: 'string',
-        description: 'set the current working directory',
-        default: process.cwd(),
-        coerce: v => path.resolve(v)
+        description: 'specify the current used workstation',
+        default: async () => 1,
+        // coerce: v => path.resolve(v)
       }
     }
   }
@@ -21,6 +21,6 @@ module.exports = class StartCommand extends Command {
   async run ({
     argv
   }) {
-
+    console.log(argv)
   }
 }

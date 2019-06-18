@@ -1,7 +1,7 @@
 // Use some workstation
 
 const path = require('path')
-const Command = require('common-bin')
+const {Command} = require('bin-tool')
 
 const {workstation} = require('../../src/read-workstation')
 
