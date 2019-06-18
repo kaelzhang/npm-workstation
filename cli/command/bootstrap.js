@@ -29,6 +29,8 @@ module.exports = class StartCommand extends Command {
       projects: argv.workstation.projects
     })
 
+    await pc.process()
+
     await link(pc)
   }
 }

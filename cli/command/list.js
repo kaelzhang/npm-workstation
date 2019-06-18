@@ -24,16 +24,17 @@ module.exports = class StartCommand extends Command {
   }
 
   async run ({
+    cwd,
     argv
   }) {
     if (!argv.workstation) {
       return this._listAll()
     }
 
-    return this._list(argv.workstation)
+    return this._list(argv.workstation, cwd)
   }
 
-  async _list (name) {
+  async _list (name, cwd) {
     const ws = workstation.get(name)
     if (!ws) {
       throw new Error(`workstation "${name}" not found`)
@@ -48,7 +49,11 @@ module.exports = class StartCommand extends Command {
     }
 
     for (const {path} of projects) {
-      console.log(`  ${path}`)
+      if (path === cwd) {
+        console.log(`* ${chalk.green(path)}`)
+      } else {
+        console.log(`  ${path}`)
+      }
     }
   }
 

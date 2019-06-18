@@ -4,6 +4,7 @@ const {chmod} = require('fs-chmod')
 
 const createLink = async (target, source) => {
   await fs.remove(target)
+  await fs.ensureDir(path.dirname(target))
   await fs.symlink(source, target)
 }
 
