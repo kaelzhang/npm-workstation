@@ -9,6 +9,10 @@ const {Command} = require('bin-tool')
 const {workstation} = require('../../src/read-workstation')
 
 module.exports = class CreateCommand extends Command {
+  get description () {
+    return 'create a workstation'
+  }
+
   constructor (raw) {
     super(raw)
 
@@ -18,10 +22,6 @@ module.exports = class CreateCommand extends Command {
         description: 'create and use the workstation created just now'
       }
     }
-  }
-
-  get description () {
-    return 'create a workstation'
   }
 
   async run ({

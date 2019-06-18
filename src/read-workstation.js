@@ -9,7 +9,7 @@ const {exists} = require('./utils')
 // const HOME = home()
 const NPM_WORKSTATION = '.npm-workstation'
 const EMPTY_WORKSTATION = {
-  projectd: []
+  projects: []
 }
 
 class Workstation {
@@ -67,7 +67,7 @@ class Workstation {
   }
 
   async create (name) {
-    return fs.outputJson(this._getWSFile(name),
+    return fs.outputFile(this._getWSFile(name),
       JSON.stringify(EMPTY_WORKSTATION, null, 2))
   }
 

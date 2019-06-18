@@ -6,12 +6,16 @@ const {Command} = require('bin-tool')
 const {workstation} = require('../../src/read-workstation')
 
 module.exports = class StartCommand extends Command {
-  constructor (raw) {
-    super(raw)
-
-    this.options = {
-    }
+  get description () {
+    return 'set the current workstation'
   }
+
+  // constructor (raw) {
+  //   super(raw)
+
+  //   this.options = {
+  //   }
+  // }
 
   async run ({
     argv
